@@ -7,9 +7,14 @@
 
       <div v-if="dbInitialized" >
         <div class="database-info" >
-          <pre>
-            {{ dexieDb.dexie.class.name }}
-          </pre>
+          <h3>Классы:</h3>
+          <ul class="classes" v-for="(name) in classList" :key="name">
+            <li>{{ name }}</li>
+          </ul>
+          <h3>Заклинания:</h3>
+          <ul class="classes" v-for="(spell) in spellsList" :key="spell.id">
+            <li>{{ spell.name }} ({{ spell.level }} уровень)</li>
+          </ul>
         </div>
       </div>
       <div v-else>
@@ -33,6 +38,8 @@ export default {
         dexieDb: {},
         dbLoaded: false,
         dbInitialized: false,
+        classList: [],
+        spellsList: [],
         loadBtnDefaultClass: 'btn btn-success',
         socket : io('localhost:3031')
     }
@@ -42,18 +49,43 @@ export default {
       if (this.dbLoaded) return false;
       this.socket.emit('db request');
     },
+    getClassList() {
+      (async () => {
+        let list = [];
+        await this.dexieDb.dexie.class.each((model) => {
+          list.push(model.name);
+        });
+        return list;
+      })()
+      .then(result => this.classList = result);
+    },
+    getSpellsList() {
+      (async () => {
+        let list = [];
+        let collection = this.dexieDb.dexie.spell.toCollection().sortBy('level');
+        await collection.then((result) => {
+         list = result;
+        })
+        return list;
+      })()
+      .then(result => this.spellsList = result);
+    }
   },
   computed: {
   },
   mounted() {
     // инициализация db
     this.dexieDb = new SpellsDb('spells');
-    console.log('initialized');
     this.dbInitialized = true;
+
+    this.getClassList();
+    this.getSpellsList();
 
     this.socket.on('db response', (data) => {
       this.dbLoaded = true;
-      this.dexieDb.updateDb(data.db).then(() => {console.log('updated')});
+      this.dexieDb.updateDb(data.db).then(() => {
+        console.log('updated')
+      });
     });
   },
   components: {

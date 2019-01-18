@@ -12,7 +12,6 @@ module.exports = class SpellsDb {
     });
 
     this.dexie.open();
-    console.log('constructed');
   }
 
   updateDb(db) {
@@ -42,8 +41,7 @@ module.exports = class SpellsDb {
             dexieDb.classSpells.bulkPut(db.classSpells);
           }
         });
-
-        console.log('dexie input ready');
+        
       }).catch(err => {
         console.error("Dexie spawn error: " + err.stack);
       });
