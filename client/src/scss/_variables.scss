@@ -1,0 +1,39 @@
+  
+  @import '_icons.scss';
+
+  $lightgray1: #f3f3f3;
+  $lightgray2: #e1e1e1;
+  $gray: #777;
+  $green: #1dab1a;
+  $lightblue: #cad8f7;
+
+
+  @mixin wrapper-block {
+    padding: 0 10px;
+    border: 1px solid $lightgray2;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+
+  @mixin short-info-block {
+      padding: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      .title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-right: 30px;
+      }
+  }
+
+  @mixin open-btn {
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    @include icon_arrow(20px, 20px, $icon_gray);
+    border-radius: 5px;
+    transition: .3s;
+  }

@@ -3,7 +3,6 @@ const Dexie = require('dexie').default;
 module.exports = class SpellsDb {
 
   constructor (dbName) {
-
     this.dexie = new Dexie(dbName);
     this.dexie.version(1).stores({
       class: 'id,name',

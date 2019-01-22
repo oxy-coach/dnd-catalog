@@ -1,0 +1,94 @@
+
+@import '_variables.scss';
+@import '_icons.scss';
+
+.class-wrapper {
+  @include wrapper-block;
+
+  .class-short-info {
+    @include short-info-block;
+
+  }
+
+  .class-additional-info {
+    display: none;
+    padding: 10px 0;
+  }
+
+  .open-info-btn {
+    @include open-btn;
+  }
+
+  .class-spells {
+    border: 1px solid $lightgray2;
+    border-radius: 5px;
+
+    .info-row {
+      @include short-info-block;
+    }
+
+    .class-info-title {
+      font-weight: bold;
+    }
+    .description-row {
+      display: none;
+      min-height: 200px;
+      border-top: 1px solid $lightgray2;
+    }
+
+    .info-row > .open-info-btn {
+      top: 10px;
+    }
+
+    &.opened {
+      .description-row {
+        display: block;
+        padding: 10px 5px;
+      }
+      .info-row > .open-info-btn {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .level-wrapper {
+    border: 1px solid $lightgray2;
+    border-radius: 5px;
+    margin-bottom: 5px;
+
+    .spells-list {
+      display: none;
+      padding: 0 5px;
+      border-top: 1px solid $lightgray2;
+    }
+
+    .level-short-title {
+      font-weight: bold;
+    }
+
+    .level-short-info > .open-info-btn {
+      top: 10px;
+    }
+
+    &.opened {
+      .spells-list {
+        display: block;
+      }
+      .level-short-info > .open-info-btn {
+        transform: rotate(90deg);
+      }
+    }
+  }
+  .level-short-info {
+    @include short-info-block;
+  }
+
+  &.opened {
+    .class-additional-info {
+      display: block;
+    }
+    .class-short-info > .open-info-btn {
+      transform: rotate(90deg);
+    }
+  }
+}

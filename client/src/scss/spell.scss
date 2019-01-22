@@ -1,0 +1,96 @@
+
+@import '_variables.scss';
+
+
+  .spell-wrapper {
+    @include wrapper-block;
+
+    .spell-short-info {
+     
+      @include short-info-block;
+      
+      .info-icons {
+        margin: 0 10px;
+        font-weight: bold;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8em;
+      }
+      .level {
+        background-color: adjust-hue($green, 5);
+        font-style: initial;
+      }
+      .concentration {
+        background-color: adjust-hue($green, 85);
+      }
+      .ritual {
+        background-color: adjust-hue($green, 145);
+      }
+    }
+
+    .spell-description {
+      display: none;
+      padding: 10px;
+    }
+    .info-line {
+      display: block;
+      margin: 5px 0;
+
+      span {
+        font-weight: bold;
+      }
+      p {
+        display: inline-block;
+        margin: 0;
+        margin-left: 15px;
+        border: 1px solid $gray;
+        border-radius: 15px;
+        font-size: .9em;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+
+        &[data-component="verbal"] {
+          background-color: $lightblue;
+        }
+        &[data-component="somatic"] {
+          background-color: adjust-hue($lightblue, 200);
+        }
+        &[data-component="material"] {
+          background-color: adjust-hue($lightblue, 110);
+        }
+      }
+    }
+
+    .description {
+      margin: 10px 0;
+      .title {
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      .text {
+
+        p {
+          margin: .5em 0;
+        }
+      }
+    }
+
+    .open-info-btn {
+      @include open-btn;
+    }
+    &.opened {
+      .spell-short-info {
+        border-bottom: 1px solid $lightgray2;
+      }
+      .spell-description {
+        display: block;
+      } 
+      .open-info-btn {
+        transform: rotate(90deg);
+      }
+    }
+    
+  }

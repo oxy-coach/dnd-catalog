@@ -1,0 +1,18 @@
+
+@import '_icons.scss';
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.favorites-btn {
+  position: absolute;
+  right: 45px;
+  top: 10px;
+  @include icon_star_hollow(25px, 25px, $icon_gray);
+  transition: .3s;
+
+  &.favorite {
+    @include icon_star_filled(25px, 25px, $icon_yellow);
+  }
+}
