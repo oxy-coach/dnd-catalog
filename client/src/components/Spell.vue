@@ -2,6 +2,7 @@
   <div class="spell-wrapper" :class="{opened: opened}" >
     <div class="spell-short-info" @click="toggleWrapper">
       <div class="title">{{ item.name }}</div>
+      <br>
       <div class="info-icons level">{{ getLevel }}</div>
       <div class="info-icons concentration" v-if="item.hasConcentration">К</div>
       <div class="info-icons ritual" v-if="item.isRitual">Р</div>
@@ -39,14 +40,15 @@ export default {
   data() {
     return {
       opened: false,
+      isFavorite: false,
     }
   },
   computed: {
     getLevel() {
       return (this.item.level == 0) ? 'Заговор' : 'ур. ' + this.item.level;
     },
-    isFavorite() {
-      return false;
+    getDb() {
+      return this.$store.state.db;
     }
   },
   methods: {
@@ -55,8 +57,30 @@ export default {
     },
     toggleFavorite(e) {
       e.stopPropagation();
-      // добавляем/удаляем из избранных заклинаний
+      
+      if (this.isFavorite) {
+        // удаляем из избранных
+        (async () => {
+          this.getDb.dexie.favoriteSpells.where({spellId: this.item.id}).delete().then(() => {
+            this.isFavorite = !this.isFavorite;
+          });
+        })();
+      } else {
+        // добавляем в избранное
+        (async () => {
+          this.getDb.dexie.favoriteSpells.put({spellId: this.item.id}).then(() => {
+            this.isFavorite = !this.isFavorite;
+          });
+        })();
+      }
     }
+  },
+  mounted() {
+    (async () => {
+      this.getDb.dexie.favoriteSpells.where({spellId: this.item.id}).count().then((result) => {
+        this.isFavorite = Boolean(result);;
+      });
+    })();
   }
 }
 </script>

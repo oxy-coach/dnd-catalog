@@ -6,11 +6,10 @@
     @include wrapper-block;
 
     .spell-short-info {
-     
       @include short-info-block;
       
       .info-icons {
-        margin: 0 10px;
+        margin: 0 5px;
         font-weight: bold;
         color: white;
         padding: 5px 10px;
@@ -94,3 +93,24 @@
     }
     
   }
+
+@media (max-width: 768px) {
+  .spell-wrapper {
+    font-size: 14px;
+
+    .spell-short-info {
+      display: block;
+      padding-right: 70px;
+
+      .info-icons {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+@media (max-width: 468px) {
+  .spell-wrapper {
+    font-size: 12px;
+  }
+}

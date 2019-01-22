@@ -1,19 +1,26 @@
 <template>
-  <div class="class-wrapper" :class="{opened: opened}">
+  <div class="open-box class-wrapper" :class="{opened: opened}">
     <div class="class-short-info" @click="toggleWrapper">
       <div class="title">{{ classItem.name }}</div>
       <div class="favorites-btn" :class="{favorite: isFavorite}" @click="toggleFavorite"></div>
       <div class="open-info-btn" ></div>
     </div>
-    <div class="class-additional-info">
-      <div class="class-spells" :class="{opened: spellsOpened}">
+    <div class="open-box-description class-additional-info">
+      <div class="open-box class-magic-info" :class="{opened: magicInfoOpened}">
+        <div class="info-row" @click="toggleMagicInfo">
+          <div class="class-info-title" >Доп. информация:</div>
+          <div class="open-info-btn" ></div>
+        </div>
+        <div class="open-box-description description-row" v-html="classItem.spellsInfo"></div>
+      </div>
+      <div class="open-box class-spells" :class="{opened: spellsOpened}">
         <div class="info-row" @click="toggleClassList">
           <div class="class-info-title" >Заклинания:</div>
           <div class="open-info-btn" ></div>
         </div>
-        <div class="description-row">
+        <div class="open-box-description description-row">
           <div v-for="(spells, level) in spellsList" :key="level" >
-            <div class="level-wrapper">
+            <div class="open-box level-wrapper">
               <div class="level-short-info" @click="toggleLevelList">
                 <div class="level-short-title">
                   <span v-if="level > 0">Уровень {{level}}</span>
@@ -21,7 +28,7 @@
                 </div>
                 <div class="open-info-btn" ></div>
               </div>
-              <div class="spells-list">
+              <div class="open-box-description spells-list">
                 <Spell v-for="(spell) in spells" :item="spell" :key="spell.id" />
               </div>
             </div>
@@ -47,13 +54,11 @@ export default {
       opened: false,
       spellsLoaded: false,
       spellsOpened: false,
+      magicInfoOpened: false,
       spellsList: {},
     }
   },
   computed: {
-    isFavorite() {
-      //return false;
-    }
   },
   methods: {
     toggleWrapper() {
@@ -65,13 +70,31 @@ export default {
     toggleClassList() {
       this.spellsOpened = !this.spellsOpened;
     },
+    toggleMagicInfo() {
+      this.magicInfoOpened = !this.magicInfoOpened;
+    },
     toggleLevelList(e) {
       let parentElem = e.target.closest('.level-wrapper');
       parentElem.classList.toggle('opened');
     },
     toggleFavorite(e) {
       e.stopPropagation();
-      // добавляем/удаляем из избранных заклинаний
+
+      if (this.isFavorite) {
+        // удаляем из избранных
+        (async () => {
+          this.getDb.dexie.favoriteClass.where({classId: this.classItem.id}).delete().then(() => {
+            this.isFavorite = !this.isFavorite;
+          });
+        })();
+      } else {
+        // добавляем в избранное
+        (async () => {
+          this.getDb.dexie.favoriteClass.put({classId: this.classItem.id}).then(() => {
+            this.isFavorite = !this.isFavorite;
+          });
+        })();
+      }
     },
     loadSpellsList(){
       if (this.spellsLoaded) return false;
@@ -112,7 +135,11 @@ export default {
     }
   },
   mounted() {
-    
+    (async () => {
+      this.getDb.dexie.favoriteClass.where({classId: this.classItem.id}).count().then((result) => {
+        this.isFavorite = Boolean(result);
+      });
+    })();
   },
   components: {
     Spell,

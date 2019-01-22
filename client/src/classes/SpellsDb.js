@@ -5,9 +5,11 @@ module.exports = class SpellsDb {
   constructor (dbName) {
     this.dexie = new Dexie(dbName);
     this.dexie.version(1).stores({
-      class: 'id,name',
+      class: 'id,name,spellsInfo',
       spell: 'id,name,level,castTime,distance,isRitual,isVerbal,isSomatic,isMaterial,materials,duration,hasConcentration,description',
-      classSpells: 'id,classId,spellId'
+      classSpells: 'id,classId,spellId',
+      favoriteClass: '++id,classId',
+      favoriteSpells: '++id,spellId'
     });
 
     this.dexie.open();
