@@ -1,0 +1,45 @@
+
+@import '_variables.scss';
+
+.search-header {
+  padding: 10px 15px;
+  border-bottom: 1px solid $gray;
+
+  > div {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  input, select {
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #e3e3e3;
+
+    &:focus {
+      border-color: $green;
+    }
+  }
+  input {
+    padding: 6px 10px;
+  }
+  select {
+    padding: 5px;
+    background: white;
+  }
+  
+}
+.search-results {
+  padding: 10px 5px;
+
+  .results-title {
+    padding: 0 15px;
+    font-weight: bold;
+  }
+  .empty-result {
+    font-size: 0.8em;
+    margin-top: 15px;
+    padding: 0 15px;
+    font-weight: bold;
+    font-style: italic;
+  }
+}

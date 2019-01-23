@@ -13,7 +13,9 @@
       <div class="tab-content" :class="{active: (2 == activeTab)}">
         <Favorites />
       </div>
-      <div class="tab-content" :class="{active: (3 == activeTab)}"></div>
+      <div class="tab-content" :class="{active: (3 == activeTab)}">
+        <Search />
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +23,7 @@
 <script>
 import Class from './Class.vue';
 import Favorites from './Favorites.vue';
+import Search from './Search.vue';
 
 
 export default {
@@ -56,7 +59,8 @@ export default {
   },
   components: {
     Class,
-    Favorites
+    Favorites,
+    Search
   }
 }
 </script>
