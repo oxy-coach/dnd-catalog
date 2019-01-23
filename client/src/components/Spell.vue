@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       opened: false,
-      isFavorite: false,
     }
   },
   computed: {
@@ -49,6 +48,9 @@ export default {
     },
     getDb() {
       return this.$store.state.db;
+    },
+    isFavorite() {
+      return this.$store.state.favorites.spells.some(i => (i.id == this.item.id));
     }
   },
   methods: {
@@ -60,27 +62,14 @@ export default {
       
       if (this.isFavorite) {
         // удаляем из избранных
-        (async () => {
-          this.getDb.dexie.favoriteSpells.where({spellId: this.item.id}).delete().then(() => {
-            this.isFavorite = !this.isFavorite;
-          });
-        })();
+        this.$store.dispatch('removeSpell', this.item.id);
       } else {
         // добавляем в избранное
-        (async () => {
-          this.getDb.dexie.favoriteSpells.put({spellId: this.item.id}).then(() => {
-            this.isFavorite = !this.isFavorite;
-          });
-        })();
+        this.$store.dispatch('addSpell', this.item.id);
       }
     }
   },
   mounted() {
-    (async () => {
-      this.getDb.dexie.favoriteSpells.where({spellId: this.item.id}).count().then((result) => {
-        this.isFavorite = Boolean(result);;
-      });
-    })();
   }
 }
 </script>

@@ -1,22 +1,15 @@
 <template>
   <div class="full-width">
-    <div class="control">
-      <a href="javascript:void(0);" :class="[{loaded : dbLoaded}, loadBtnDefaultClass]" @click="loadBd">Загрузить БД</a>
+    <div class="header">
+      Заклинания
     </div>
-    <h1>Заклинания классов:</h1>
-    <div class="result">
-
-      <div v-if="dbInitialized" >
-        <div class="database-info" >
-            <Class v-for="(classItem) in classList" :classItem="classItem" :key="classItem.id" />
-        </div>
+    <div class="control">
+      <div v-if="dbInitialized">
+        <Tab />
       </div>
       <div v-else>
-        <p>
-          БД не загружена
-        </p>
+        <a href="javascript:void(0);" :class="[{loaded : dbLoaded}, loadBtnDefaultClass]" @click="loadBd">Загрузить БД</a>
       </div>
-
     </div>
   </div>
 </template>
@@ -24,16 +17,14 @@
 <script>
 import io from 'socket.io-client';
 import SpellsDb from './classes/SpellsDb.js';
-import Class from './components/Class.vue';
-//import HelloComponent from './components/HelloComponent.vue'
+import Tab from './components/Tab.vue';
 
 export default {
   data() {
     return {
-        dbLoaded: false,
-        classList: [],
-        loadBtnDefaultClass: 'btn btn-success',
-        socket : io('localhost:3031')
+      dbLoaded: false,
+      loadBtnDefaultClass: 'btn btn-success',
+      socket : io('localhost:3031')
     }
   },
   methods: {
@@ -41,16 +32,6 @@ export default {
       if (this.dbLoaded) return false;
       this.socket.emit('db request');
     },
-    getClassList() {
-      (async () => {
-        let list = [];
-        await this.getDb.dexie.class.each((model) => {
-          list.push(model);
-        });
-        return list;
-      })()
-      .then(result => this.classList = result);
-    }
   },
   computed: {
     dbInitialized() {
@@ -62,9 +43,7 @@ export default {
   },
   mounted() {
     // инициализация db
-    this.$store.commit('initDb', new SpellsDb('spells'));
-
-    this.getClassList();
+    this.$store.dispatch('init', new SpellsDb('spells'));
 
     this.socket.on('db response', (data) => {
       this.dbLoaded = true;
@@ -74,7 +53,7 @@ export default {
     });
   },
   components: {
-    Class,
+    Tab,
   }
 }
 </script>

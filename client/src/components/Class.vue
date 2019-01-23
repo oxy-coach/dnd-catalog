@@ -50,15 +50,12 @@ export default {
   },
   data() {
     return {
-      isFavorite: false,
       opened: false,
       spellsLoaded: false,
       spellsOpened: false,
       magicInfoOpened: false,
       spellsList: {},
     }
-  },
-  computed: {
   },
   methods: {
     toggleWrapper() {
@@ -82,18 +79,10 @@ export default {
 
       if (this.isFavorite) {
         // удаляем из избранных
-        (async () => {
-          this.getDb.dexie.favoriteClass.where({classId: this.classItem.id}).delete().then(() => {
-            this.isFavorite = !this.isFavorite;
-          });
-        })();
+        this.$store.dispatch('removeClass', this.classItem.id);
       } else {
         // добавляем в избранное
-        (async () => {
-          this.getDb.dexie.favoriteClass.put({classId: this.classItem.id}).then(() => {
-            this.isFavorite = !this.isFavorite;
-          });
-        })();
+        this.$store.dispatch('addClass', this.classItem.id);
       }
     },
     loadSpellsList(){
@@ -132,14 +121,12 @@ export default {
   computed: {
     getDb() {
       return this.$store.state.db;
-    }
+    },
+    isFavorite() {
+      return this.$store.state.favorites.classes.some(i => (i.id == this.classItem.id));
+    },
   },
   mounted() {
-    (async () => {
-      this.getDb.dexie.favoriteClass.where({classId: this.classItem.id}).count().then((result) => {
-        this.isFavorite = Boolean(result);
-      });
-    })();
   },
   components: {
     Spell,
