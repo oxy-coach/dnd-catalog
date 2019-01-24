@@ -4,7 +4,7 @@
   "description": "dnd catalog",
   "main": "index.js",
   "engines": {
-    "node": "10.x"
+    "node": "8.x"
   },
   "scripts": {
     "start": "nodemon --ext js --watch server/src",
