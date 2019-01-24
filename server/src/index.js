@@ -28,4 +28,5 @@ io.on('connection', function (socket) {
 });
 
 // starting server
+let port = process.env.PORT || 3031;
 server.listen(config.port, () => console.log(`Listening on localhost:${config.port}`));
