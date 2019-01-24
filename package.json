@@ -9,8 +9,7 @@
   "scripts": {
     "start": "nodemon --ext js --watch server/src",
     "deploy": "node index.js",
-    "heroku-prebuild": "cd client && npm install",
-    "heroku-postbuild": "cd client && npm run prod"
+    "heroku-prebuild": "cd client && npm install"
   },
   "author": "Vladimir Kolchin <kolchin.moon@gmail.com>",
   "license": "MIT",
