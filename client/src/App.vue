@@ -4,11 +4,13 @@
       Заклинания
     </div>
     <div class="control">
-      <div v-if="dbInitialized">
+      <div v-if="dbLoaded">
         <Tab />
       </div>
       <div v-else>
-        <a href="javascript:void(0);" :class="[{loaded : dbLoaded}, loadBtnDefaultClass]" @click="loadBd">Загрузить БД</a>
+        <div class="db-loader">
+          <a class="load-db-btn" href="javascript:void(0);" :class="{loaded : dbLoaded}" @click="loadBd">Загрузить базу заклинаний</a>
+        </div>
       </div>
     </div>
   </div>
@@ -23,7 +25,6 @@ export default {
   data() {
     return {
       dbLoaded: false,
-      loadBtnDefaultClass: 'btn btn-success',
       socket : io('localhost:3031')
     }
   },
@@ -34,9 +35,6 @@ export default {
     },
   },
   computed: {
-    dbInitialized() {
-      return Boolean(this.getDb);
-    },
     getDb() {
       return this.$store.state.db;
     }
@@ -44,6 +42,8 @@ export default {
   mounted() {
     // инициализация db
     this.$store.dispatch('init', new SpellsDb('spells'));
+
+    this.getDb.checkLoad().then(loaded => this.dbLoaded = loaded);
 
     this.socket.on('db response', (data) => {
       this.dbLoaded = true;

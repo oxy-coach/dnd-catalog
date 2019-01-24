@@ -12,7 +12,30 @@ module.exports = class SpellsDb {
       favoriteSpells: '++id,spellId'
     });
 
+    //this.loaded = this.checkLoad();
+
     this.dexie.open();
+  }
+
+  checkLoad(){
+    return new Promise((resolve) => {
+      let dexieDb = this.dexie;
+
+      Dexie.spawn(function* () {
+
+        let classCount = yield dexieDb.class.count();
+
+        let spellCount = yield dexieDb.spell.count();
+
+        let csCount = yield dexieDb.classSpells.count();
+
+        resolve((classCount && spellCount && csCount));
+
+      }).catch(err => {
+        console.error("Dexie spawn error: " + err.stack);
+      });
+
+    });
   }
 
   updateDb(db) {

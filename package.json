@@ -1,10 +1,14 @@
 {
-  "name": "dnd-catalog-server",
+  "name": "dnd-catalog",
   "version": "1.0.0",
-  "description": "server side of dnd catalog",
-  "main": "src/index.js",
+  "description": "dnd catalog",
+  "main": "index.js",
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
-    "start": "nodemon --ext js --watch src"
+    "start": "nodemon --ext js --watch server/src",
+    "deploy": "node index.js"
   },
   "author": "Vladimir Kolchin <kolchin.moon@gmail.com>",
   "license": "MIT",

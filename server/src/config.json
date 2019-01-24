@@ -1,4 +1,4 @@
 {
   "port": 3031,
-  "db": "./db/spells.db"
+  "db": "./server/db/spells.db"
 }
