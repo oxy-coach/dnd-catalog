@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "server side of dnd calculator",
   "main": "src/index.js",
+  "engines": {
+    "node": "8.x"
+  },
   "scripts": {
-    "start": "nodemon --ext js --watch src"
+    "start": "nodemon --ext js --watch src",
+    "prod": "node src"
   },
   "author": "vovan <kolchin.moon@gmail.com>",
   "license": "MIT",

@@ -4,39 +4,11 @@ const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const WebpackCommonConfig = require('./webpack.config.common')
 
 module.exports = {
   mode: 'production',
-  entry: [
-    './src/index.js'
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        use: 'vue-loader'
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader'
-      }
-    ]
-  },
+  ...WebpackCommonConfig,
   plugins: [
     //new webpack.HotModuleReplacementPlugin(),
     new SWPrecacheWebpackPlugin({

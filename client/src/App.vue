@@ -20,12 +20,13 @@
 import io from 'socket.io-client';
 import SpellsDb from './classes/SpellsDb.js';
 import Tab from './components/Tab.vue';
+import config from './config.json';
 
 export default {
   data() {
     return {
       dbLoaded: false,
-      socket : io('localhost:3031')
+      socket : io(config.socket)
     }
   },
   methods: {

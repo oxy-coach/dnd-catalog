@@ -5,8 +5,11 @@ var io = require('socket.io')(server);
 var dndBase = require('./classes/DndBase');
 
 var config = require('./config.json');
+let db = new dndBase(config.db);
 
 io.on('connection', function (socket) {
+
+  
 
   // запрос базы данных
   socket.on('db request', function () {
@@ -29,4 +32,4 @@ io.on('connection', function (socket) {
 
 // starting server
 let port = process.env.PORT || 3031;
-server.listen(config.port, () => console.log(`Listening on localhost:${config.port}`));
+server.listen(port, () => console.log(`Listening on localhost:${port}`));
