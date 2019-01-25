@@ -11,6 +11,18 @@ module.exports = class SpellsDb {
       favoriteClass: '++id,classId',
       favoriteSpells: '++id,spellId'
     });
+    this.dexie.version(2).stores({
+      class: 'id,name,spellsInfo',
+      spell: 'id,name,level,castTime,distance,isRitual,isVerbal,isSomatic,isMaterial,materials,duration,hasConcentration,description,school',
+      classSpells: 'id,classId,spellId',
+      favoriteClass: '++id,classId',
+      favoriteSpells: '++id,spellId'
+    }).upgrade(tx => {
+      return tx.spell.toCollection().modify((spell) => {
+        // добавление строки
+        spell.school = '';
+      });
+    });
 
     //this.loaded = this.checkLoad();
 

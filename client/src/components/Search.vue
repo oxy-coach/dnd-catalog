@@ -28,6 +28,20 @@
           <option value="1">Да</option>
         </select>
       </div>
+      <div class="school-search-wrapper">
+        <span>Школа:</span>
+        <select v-model="school" class="level-search" @change="search">
+          <option value="">-</option>
+          <option value="воплощение">воплощение</option>
+          <option value="очарование">очарование</option>
+          <option value="ограждение">ограждение</option>
+          <option value="иллюзия">иллюзия</option>
+          <option value="вызов">вызов</option>
+          <option value="преобразование">преобразование</option>
+          <option value="прорицание">прорицание</option>
+          <option value="некромантия">некромантия</option>
+        </select>
+      </div>
     </div>
     <div class="search-results">
       <div class="results-title">Результаты поиска:</div>
@@ -48,13 +62,14 @@ export default {
       name: '',
       level: '',
       ritual: '',
+      school: '',
       searched: false,
       spells: [],
     }
   },
   methods: {
     search(){
-      this.searched = (this.name || this.level || this.ritual) ? true : false;
+      this.searched = (this.name || this.level || this.ritual || this.school) ? true : false;
 
       if (!this.searched) return this.spells = [];
 
@@ -77,6 +92,10 @@ export default {
           }
 
           if (this.ritual && (spell.isRitual != this.ritual)) {
+            return false;
+          }
+
+          if (this.school && (spell.school != this.school)) {
             return false;
           }
 

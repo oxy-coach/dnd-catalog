@@ -11,6 +11,7 @@
     </div>
     <div class="spell-description">
       <div class="info">
+        <div class="info-line" > Школа: <strong><i>{{item.school}}</i></strong> </div>
         <div class="info-line" v-if="item.isRitual"> <i>Ритуал</i> </div>
         <div class="info-line"> <span>Время накладывания:</span> {{ item.castTime }} </div>
         <div class="info-line"> <span>Дистанция:</span> {{ item.distance }} </div>
