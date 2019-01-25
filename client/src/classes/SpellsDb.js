@@ -17,6 +17,7 @@ module.exports = class SpellsDb {
     this.dexie.open();
   }
 
+  // проверка таблиц
   checkLoad(){
     return new Promise((resolve) => {
       let dexieDb = this.dexie;
@@ -38,6 +39,28 @@ module.exports = class SpellsDb {
     });
   }
 
+  // очистка таблиц 
+  clearDb() {
+    return new Promise((resolve) => {
+      let dexieDb = this.dexie;
+
+      Dexie.spawn(function* () {
+
+        yield dexieDb.class.clear();
+
+        yield dexieDb.spell.clear();
+
+        yield dexieDb.classSpells.clear();
+
+        resolve();
+
+      }).catch(err => {
+        console.error("Dexie spawn error: " + err.stack);
+      });
+    });
+  }
+
+  // обновление таблиц
   updateDb(db) {
     return new Promise((resolve) => {
 
@@ -45,32 +68,34 @@ module.exports = class SpellsDb {
 
       Dexie.spawn(function* () {
 
-        yield dexieDb.class.count((count) => {
-          if (!count) {
-            console.log('no rows in class');
-            dexieDb.class.bulkPut(db.class);
-          }
-        });
+        let classCount = yield dexieDb.class.count();
 
-        yield dexieDb.spell.count((count) => {
-          if (!count) {
-            console.log('no rows in spell');
-            dexieDb.spell.bulkPut(db.spell);
-          }
-        });
+        let spellCount = yield dexieDb.spell.count();
 
-        yield dexieDb.classSpells.count((count) => {
-          if (!count) {
-            console.log('no rows in classSpells');
-            dexieDb.classSpells.bulkPut(db.classSpells);
-          }
-        });
+        let csCount = yield dexieDb.classSpells.count();
+
+        if (!classCount) {
+          console.log('no rows in class');
+          yield dexieDb.class.bulkPut(db.class);
+        }
+
+        if (!spellCount) {
+          console.log('no rows in spell');
+          yield dexieDb.spell.bulkPut(db.spell);
+        }
+
+        if (!csCount) {
+          console.log('no rows in classSpells');
+          yield dexieDb.classSpells.bulkPut(db.classSpells);
+        }
         
+        resolve();
+
       }).catch(err => {
         console.error("Dexie spawn error: " + err.stack);
       });
 
-      resolve();
+      
     });
   }
 }

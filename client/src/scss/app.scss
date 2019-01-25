@@ -14,6 +14,7 @@ body {
   border-bottom: 2px solid $lightgray2;
   padding: 15px 0;
   text-transform: uppercase; 
+  position: relative;
 }
 
 .favorites-btn {
@@ -32,6 +33,7 @@ body {
   text-align: center;
   margin: 1em 0;
 }
+
 .load-db-btn {
   background-color: desaturate($green, 25);
   display: inline-block;
@@ -44,4 +46,15 @@ body {
   &:hover {
     background-color: saturate($green, 10);
   }
+}
+
+.db-refresh {
+  position: absolute;
+  @include icon_refresh(30px, 30px, '1a72ab');
+  background-size: 70%;
+  border-radius: 5px;
+  top: 10px;
+  left: 10px;
+  background-color: #fff;
+  cursor: pointer;
 }

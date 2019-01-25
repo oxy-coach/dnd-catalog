@@ -1,6 +1,7 @@
 <template>
   <div class="full-width">
     <div class="header">
+      <div class="db-refresh" @click="updateDb"></div>
       Заклинания
     </div>
     <div class="control">
@@ -34,6 +35,12 @@ export default {
       if (this.dbLoaded) return false;
       this.socket.emit('db request');
     },
+    updateDb(){
+      this.getDb.clearDb().then(() => {
+        this.dbLoaded = false;
+        this.loadBd();
+      });
+    }
   },
   computed: {
     getDb() {
@@ -49,7 +56,7 @@ export default {
     this.socket.on('db response', (data) => {
       this.dbLoaded = true;
       this.getDb.updateDb(data.db).then(() => {
-        console.log('updated');
+        this.$store.dispatch('update');
       });
     });
   },

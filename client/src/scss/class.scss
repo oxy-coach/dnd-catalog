@@ -71,6 +71,10 @@
     > .info-row {
       @include short-info-block;
       font-weight: bold;
+
+      .open-info-btn {
+        top: 10px;
+      }
     }
     > .description-row {
       border-top: 1px solid $lightgray2;

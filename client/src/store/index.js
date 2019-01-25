@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     db: false,
+    classList: [],
     favorites: {
       classes: [],
       spells: [],
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     initFavorites(state, payload) {
       state.favorites = payload;
+    },
+    classList(state, payload) {
+      state.classList = payload;
     },
     classes(state, payload) {
       state.favorites.classes = payload;
@@ -54,10 +58,29 @@ export default new Vuex.Store({
             classes: classes
           };
           commit('initFavorites', favorites);
+
+          return dexie.class.toCollection().toArray();
+        })
+        .then((classes) => {
+          commit('classList', classes);
           resolve();
         }).catch((e) => {
           reject(e);
         });
+      });
+    },
+    // обновление бд
+    update({commit, state}){
+      return new Promise((resolve, reject) => {
+        let dexie = state.db.dexie;
+
+        dexie.class.toCollection().toArray()
+        .then((classes) => {
+          console.log('classList go');
+          commit('classList', classes);
+          resolve();
+        }).catch(e => reject(e));
+
       });
     },
     // добавить класс

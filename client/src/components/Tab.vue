@@ -8,7 +8,7 @@
     <div class="tabs-content-wrapper">
       <div class="tab-content" :class="{active: (1 == activeTab)}">
         <div class="tab-title">Заклинания по классам:</div>
-        <Class v-for="(classItem) in classList" :classItem="classItem" :key="classItem.id" />
+        <Class v-for="(classItem) in getClassList" :classItem="classItem" :key="classItem.id" />
       </div>
       <div class="tab-content" :class="{active: (2 == activeTab)}">
         <Favorites />
@@ -30,32 +30,23 @@ export default {
   data(){
     return {
       activeTab: 1,
-      classList: [],
     };
   },
   computed: {
     getDb() {
       return this.$store.state.db;
     },
+    getClassList() {
+      return this.$store.state.classList;
+    },
   },
   methods: {
-    getClassList() {
-      (async () => {
-        let list = [];
-        await this.getDb.dexie.class.each((model) => {
-          list.push(model);
-        });
-        return list;
-      })()
-      .then(result => this.classList = result);
-    },
     switchTab(e) {
       let elem = e.target;
       this.activeTab = elem.getAttribute('data-tab-id');
     },
   },
   mounted(){
-    this.getClassList();
   },
   components: {
     Class,
