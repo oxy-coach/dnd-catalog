@@ -17,7 +17,7 @@ io.on('connection', function (socket) {
     let db = new dndBase(config.db);
 
     // получаем промис с таблицами
-    db.getTables(['spell', 'class', 'classSpells'])
+    db.getTables(['spell', 'class', 'classSpells', 'armor', 'item', 'tool', 'weapon', 'sets'])
     .then((response) => {
       db.close();
 

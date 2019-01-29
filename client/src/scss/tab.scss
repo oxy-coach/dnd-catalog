@@ -25,8 +25,12 @@
   }
 }
 
+.tabs-wrapper {
+  .tabs-content-wrapper {
+    padding: 10px 5px;
+  }
+}
 .tabs-content-wrapper {
-  padding: 10px 5px;
 
   .tab-content {
     display: none;
@@ -44,6 +48,6 @@
 
 @media (max-width: 468px) {
   .tab-link {
-    font-size: 12px;
+    font-size: 10px;
   }
 }

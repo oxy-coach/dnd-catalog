@@ -10,11 +10,28 @@ body {
 .header {
   background-color: $gray;
   color: white;
-  text-align: center;
   border-bottom: 2px solid $lightgray2;
-  padding: 15px 0;
+  border-top: 2px solid $lightgray2;
+  padding: 0;
   text-transform: uppercase; 
   position: relative;
+  display: flex;
+  align-items: center;
+}
+.header-tab {
+  cursor: pointer;
+  width: 33%;
+  text-align: center;
+  padding: 20px 10px;
+  display: inline-block;
+  border-bottom: 2px solid $gray;
+
+  &:not(:last-child) {
+    border-right: 2px solid white;
+  }
+  &.active {
+    border-bottom: 2px solid red;
+  }
 }
 
 .favorites-btn {
@@ -57,4 +74,29 @@ body {
   left: 10px;
   background-color: #fff;
   cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid $lightgray2;
+  width: 400px;
+}
+th,td {
+  padding: 5px 10px;
+  border: 1px solid $lightgray2;
+}
+th {
+  background: white;
+}
+tr:nth-child(even) {
+  background-color: transparentize($green, .8);
+}
+
+@media (max-width: 468px) {
+  .header {
+    font-size: 12px;
+  }
+  .db-refresh {
+    opacity: 0.6;
+  }
 }
