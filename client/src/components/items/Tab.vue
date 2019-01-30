@@ -4,6 +4,7 @@
       <div class="tab-link" :class="{active: (1 == activeTab)}" data-tab-id="1" @click="switchTab">Предметы</div>
       <div class="tab-link" :class="{active: (2 == activeTab)}" data-tab-id="2" @click="switchTab">Оружие</div>
       <div class="tab-link" :class="{active: (3 == activeTab)}" data-tab-id="3" @click="switchTab">Доспехи</div>
+      <div class="tab-link" :class="{active: (4 == activeTab)}" data-tab-id="4" @click="switchTab">Калькулятор</div>
     </div>
     <div class="tabs-content-wrapper">
 
@@ -57,6 +58,10 @@
         </div>
       </div>
 
+      <div class="tab-content" :class="{active: (4 == activeTab)}">
+        <inventory />
+      </div>
+
     </div>
   </div>
 </template>
@@ -66,6 +71,7 @@ import Item from './Item.vue';
 import Set from './Set.vue';
 import Weapon from './Weapon.vue';
 import Armor from './Armor.vue';
+import Inventory from './Inventory.vue';
 
 export default {
   props: {
@@ -122,7 +128,8 @@ export default {
     Item,
     Set,
     Weapon,
-    Armor
+    Armor,
+    Inventory
   }
 }
 </script>
