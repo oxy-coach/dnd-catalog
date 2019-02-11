@@ -1,7 +1,7 @@
 {
-  "name": "dnd-calculator-server",
+  "name": "dnd-catalog-server",
   "version": "1.0.0",
-  "description": "server side of dnd calculator",
+  "description": "server side of dnd-catalog",
   "main": "src/index.js",
   "engines": {
     "node": "8.x"
