@@ -28,6 +28,11 @@ module.exports = class SpellsDb {
       sets: 'id,name,price,description',
     });
 
+    // 4-я версия - добавлен список заклинаний на печать
+    this.dexie.version(4).stores({
+      printSpells: '++id,spellId'
+    });
+
     //this.loaded = this.checkLoad();
 
     this.dexie.open();

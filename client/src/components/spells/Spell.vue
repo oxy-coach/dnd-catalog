@@ -6,6 +6,7 @@
       <div class="info-icons level">{{ getLevel }}</div>
       <div class="info-icons concentration" v-if="item.hasConcentration">К</div>
       <div class="info-icons ritual" v-if="item.isRitual">Р</div>
+      <div class="to-print-btn" :class="{inList: isPrinted}" @click="togglePrinted"></div>
       <div class="favorites-btn" :class="{favorite: isFavorite}" @click="toggleFavorite"></div>
       <div class="open-info-btn" ></div>
     </div>
@@ -52,6 +53,9 @@ export default {
     },
     isFavorite() {
       return this.$store.state.favorites.spells.some(i => (i.id == this.item.id));
+    },
+    isPrinted() {
+      return this.$store.state.prints.spells.some(i => (i.id == this.item.id));
     }
   },
   methods: {
@@ -67,6 +71,17 @@ export default {
       } else {
         // добавляем в избранное
         this.$store.dispatch('addSpell', this.item.id);
+      }
+    },
+    togglePrinted(e) {
+      e.stopPropagation();
+      
+      if (this.isPrinted) {
+        // удаляем из печати
+        this.$store.dispatch('removeSpellPrint', this.item.id);
+      } else {
+        // добавляем в печать
+        this.$store.dispatch('addSpellPrint', this.item.id);
       }
     }
   },

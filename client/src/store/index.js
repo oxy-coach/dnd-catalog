@@ -11,6 +11,9 @@ export default new Vuex.Store({
       classes: [],
       spells: [],
     },
+    prints: {
+      spells: [],
+    }
   },
   mutations: {
     initDb(state, payload) {
@@ -18,6 +21,9 @@ export default new Vuex.Store({
     },
     initFavorites(state, payload) {
       state.favorites = payload;
+    },
+    initPrinted(state, payload) {
+      state.prints = payload;
     },
     classList(state, payload) {
       state.classList = payload;
@@ -27,6 +33,9 @@ export default new Vuex.Store({
     },
     spells(state, payload) {
       state.favorites.spells = payload;
+    },
+    spellsPrints(state, payload) {
+      state.prints.spells = payload;
     }
   },
   actions: {
@@ -36,6 +45,10 @@ export default new Vuex.Store({
         let favorites = {
           spells: [],
           classes: [],
+        };
+
+        let prints = {
+          spells: []
         };
 
         let spells = [];
@@ -63,6 +76,17 @@ export default new Vuex.Store({
         })
         .then((classes) => {
           commit('classList', classes);
+          
+          return dexie.printSpells.toCollection().toArray();
+        })
+        .then((result) => {
+          let prSpells = result.map(i => i.spellId);
+          return dexie.spell.where('id').anyOf(prSpells).sortBy('level');
+        })
+        .then((result) => {
+          prints.spells = result;
+          commit('initPrinted', prints);
+
           resolve();
         }).catch((e) => {
           reject(e);
@@ -137,6 +161,36 @@ export default new Vuex.Store({
           return db.spell.where('id').anyOf(spells).sortBy('level');
         }).then((result) => {
           commit('spells', result);
+          resolve();
+        }).catch(e => reject(e));
+      });
+    },
+    // добавить заклинание
+    addSpellPrint({ commit, state }, id) {
+      return new Promise((resolve, reject) => {
+        let db = state.db.dexie;
+        db.printSpells.put({ spellId: id }).then(() => {
+          return db.printSpells.toCollection().toArray()
+        }).then((result) => {
+          let spells = result.map(i => i.spellId);
+          return db.spell.where('id').anyOf(spells).sortBy('level');
+        }).then((result) => {
+          commit('spellsPrints', result);
+          resolve();
+        }).catch(e => reject(e));
+      });
+    },
+    // удалить заклинание
+    removeSpellPrint({ commit, state }, id) {
+      return new Promise((resolve, reject) => {
+        let db = state.db.dexie;
+        db.printSpells.where({ spellId: id }).delete().then(() => {
+          return db.printSpells.toCollection().toArray()
+        }).then((result) => {
+          let spells = result.map(i => i.spellId);
+          return db.spell.where('id').anyOf(spells).sortBy('level');
+        }).then((result) => {
+          commit('spellsPrints', result);
           resolve();
         }).catch(e => reject(e));
       });

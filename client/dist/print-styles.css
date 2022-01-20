@@ -1,0 +1,205 @@
+
+
+body {
+        width: 21cm;
+        height: auto;
+        margin: 0 auto;
+        display: grid;
+        gap: 5px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .print-spell-wrapper {
+        position: relative;
+        border: 1px solid gray;
+        padding: 0;
+        font-size: 12px;
+        padding-bottom: 20px;
+    }
+
+    .spell-short-info {
+        border-bottom: 1px solid gray;
+        position: relative;
+    }
+
+    .spell-short-info .title {
+        font-size: 14px;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 5px 15px;
+    }
+
+    .spell-top-info-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .spell-top-info-block .info-block {
+        border: 1px solid gray;
+        padding: 3px;
+    }
+
+    .spell-top-info-block .info-block .title {
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+    }
+
+    .spell-top-info-block .info-block  .info {
+        text-align: center;
+    }
+
+    .spell-description {
+        padding: 0 5px;
+    }
+
+    .bottom-description {
+        padding: 5px 0;
+        border-top: 1px solid gray;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .bottom-description .level-and-school {
+        padding: 0 5px;
+    }
+    .materials-line {
+        padding: 5px;
+        border: 1px solid gray;
+    }
+
+    .spell-description {
+        padding: 0 5px;
+    }
+
+    .spell-description .text {
+        padding: 5px 0;
+    }
+
+    .spell-description p {
+        font-size: 12px;
+    }
+
+    .bottom-description {
+        padding: 5px 0;
+        border-top: 1px solid gray;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .bottom-description .level-and-school {
+        padding: 0 5px;
+    }
+
+
+@media print {
+  @page {
+    size: A4;
+  }
+
+    body {
+        width: 21cm;
+        height: auto;
+        margin: 0 auto;
+        display: grid;
+        gap: 5px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .print-spell-wrapper {
+        position: relative;
+        border: 1px solid gray;
+        padding: 0;
+        font-size: 12px;
+        padding-bottom: 20px;
+    }
+
+    .spell-short-info {
+        border-bottom: 1px solid gray;
+        position: relative;
+    }
+
+    .spell-short-info .title {
+        font-size: 14px;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 5px 15px;
+    }
+
+    .spell-top-info-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .spell-top-info-block .info-block {
+        border: 1px solid gray;
+        padding: 3px;
+    }
+
+    .spell-top-info-block .info-block .title {
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+    }
+
+    .spell-top-info-block .info-block  .info {
+        text-align: center;
+    }
+
+    .spell-description {
+        padding: 0 5px;
+    }
+
+    .spell-description .text {
+        padding: 5px 0;
+    }
+
+    .spell-description p {
+        font-size: 12px;
+    }
+
+    .bottom-description {
+        padding: 5px 0;
+        border-top: 1px solid gray;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .bottom-description .level-and-school {
+        padding: 0 5px;
+    }
+    .materials-line {
+        padding: 5px;
+        border: 1px solid gray;
+    }
+
+    .spell-description {
+        padding: 0 5px;
+    }
+
+    .bottom-description {
+        padding: 5px 0;
+        border-top: 1px solid gray;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .bottom-description .level-and-school {
+        padding: 0 5px;
+    }
+
+}

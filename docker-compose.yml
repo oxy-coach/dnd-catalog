@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+
+  client:
+    build:
+      context: ./client
+    ports:
+      - 8080:8080
+    depends_on:
+      - server
+  
+  server: 
+    build:
+      context: ./server
+    ports:
+      - 3031:3031
+    volumes:
+      - db:/server/db
+
+volumes:
+  db:

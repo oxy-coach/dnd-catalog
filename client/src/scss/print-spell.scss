@@ -1,0 +1,93 @@
+
+@import '_variables.scss';
+
+
+  .print-spell-wrapper {
+    position: relative;
+    border: 1px solid gray;
+    padding: 0;
+    font-size: 12px;
+    padding-bottom: 20px;
+
+    .spell-short-info {
+      border-bottom: 1px solid gray;
+      position: relative;
+      .title {
+        font-size: 14px;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 5px 15px;
+      }
+    }
+
+    .spell-top-info-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      .info-block {
+        border: 1px solid gray;
+        padding: 3px;
+        .title {
+          text-align: center;
+          text-transform: uppercase;
+          margin-bottom: 2px;
+        }
+        .info {
+          text-align: center;
+        }
+      }
+    }
+
+    .materials-line {
+      padding: 5px;
+      border: 1px solid gray;
+    }
+
+    .spell-description {
+      padding: 0 5px;
+    }
+
+    .bottom-description {
+      padding: 5px 0;
+      border-top: 1px solid gray;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      .level-and-school {
+        padding: 0 5px;
+      }
+    }
+   
+    .to-print-btn {
+      right: 0;
+      top: 0;
+      width: 15px !important;
+      height: 15px !important;
+    }
+  }
+
+@media (max-width: 768px) {
+  .print-spell-wrapper {
+    font-size: 14px;
+
+  }
+}
+
+@media (max-width: 468px) {
+  .print-spell-wrapper {
+    font-size: 12px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+  }
+
+  .header {
+    display: none;
+  }
+}
