@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+
+  client:
+    image: node:14
+    command: "npm run serve"
+    user: ${UID:-1000}:${GID:-1000}
+    volumes:
+      - ./client:/client
+    working_dir: /client
+    ports:
+      - 80:8080
+    environment:
+      - HOME=/client
+
+  server:
+    build:
+      context: ./server
+    ports:
+      - 3031:3031

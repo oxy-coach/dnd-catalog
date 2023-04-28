@@ -1,3 +1,4 @@
 {
-  "socket" : "https://mysterious-eyrie-55264.herokuapp.com"
+    "baseUrl": "http://localhost:3031",
+    "dbUrl": "get-db"
 }

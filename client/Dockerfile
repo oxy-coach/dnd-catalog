@@ -1,16 +1,15 @@
 FROM node:14
 
-WORKDIR /app
+RUN mkdir /client
+COPY . /client
+WORKDIR /client
 
-COPY package.json ./
+RUN cd /client
 
 RUN npm install --production=false
-
-COPY . ./
 
 RUN npm run prod
 
 EXPOSE 8080
 
 CMD ["npm", "run", "serve"]
-

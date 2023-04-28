@@ -31,18 +31,18 @@
 </template>
 
 <script>
-import io from 'socket.io-client';
 import SpellsDb from './classes/SpellsDb.js';
 import SpellsTab from './components/spells/Tab.vue';
 import ItemsTab from './components/items/Tab.vue';
 import Memo from './components/Memo.vue';
 import config from './config.json';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       dbLoaded: false,
-      socket : io(config.socket),
+      backendUrl: config.baseUrl,
       activeTab: 3,
       tabInfo: {
         loaded: false,
@@ -55,9 +55,20 @@ export default {
   methods: {
     loadBd() {
       if (this.dbLoaded) return false;
-      this.socket.emit('db request');
+      let url = this.backendUrl + '/' + config.dbUrl;
+
+      axios
+        .get(url)
+        .then((response) => {
+          this.dbLoaded = true;
+          this.getDb.updateDb(response.data.db).then(() => {
+            this.$store.dispatch('update');
+          });
+        })
+        .catch(error => console.log(error));
     },
     updateDb(){
+      console.log('update click');
       this.getDb.clearDb().then(() => {
         this.dbLoaded = false;
         this.loadBd();
@@ -106,12 +117,7 @@ export default {
 
     this.getDb.checkLoad().then(loaded => this.dbLoaded = loaded);
 
-    this.socket.on('db response', (data) => {
-      this.dbLoaded = true;
-      this.getDb.updateDb(data.db).then(() => {
-        this.$store.dispatch('update');
-      });
-    });
+    this.loadBd();
   },
   components: {
     SpellsTab,

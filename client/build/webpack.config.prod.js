@@ -8,9 +8,13 @@ const WebpackCommonConfig = require('./webpack.config.common')
 
 module.exports = {
   mode: 'production',
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  },
   ...WebpackCommonConfig,
   plugins: [
-    //new webpack.HotModuleReplacementPlugin(),
     new SWPrecacheWebpackPlugin({
       cacheId: 'my-vue-app',
       filename: 'service-worker.js',

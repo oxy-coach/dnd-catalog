@@ -1,16 +1,12 @@
-FROM node:14
+FROM golang:1.20-alpine
 
-WORKDIR /app
+ADD . /go/src/dnd-server
+WORKDIR /go/src/dnd-server
 
-COPY package.json /app
+RUN apk add build-base
 
-RUN npm install
+RUN go mod download
 
-COPY . .
+RUN CGO_ENABLED=1 GOOS=linux go build -o /dnd-server-build
 
-ENV PORT 3031
-
-EXPOSE $PORT
-
-CMD ["npm", "run", "prod"]
-
+ENTRYPOINT "/dnd-server-build"
