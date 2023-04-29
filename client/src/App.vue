@@ -36,7 +36,7 @@ import SpellsTab from './components/spells/Tab.vue';
 import ItemsTab from './components/items/Tab.vue';
 import Memo from './components/Memo.vue';
 import config from './config.json';
-import axios from 'axios';
+import jsonData from './data/db.json';
 
 export default {
   data() {
@@ -55,17 +55,11 @@ export default {
   methods: {
     loadBd() {
       if (this.dbLoaded) return false;
-      let url = this.backendUrl + '/' + config.dbUrl;
 
-      axios
-        .get(url)
-        .then((response) => {
-          this.dbLoaded = true;
-          this.getDb.updateDb(response.data.db).then(() => {
-            this.$store.dispatch('update');
-          });
-        })
-        .catch(error => console.log(error));
+      this.dbLoaded = true;
+      this.getDb.updateDb(jsonData.db).then(() => {
+        this.$store.dispatch('update');
+      });
     },
     updateDb(){
       console.log('update click');

@@ -11,12 +11,12 @@
     "dev": "webpack-dev-server --config build/webpack.config.dev.js",
     "prod": "webpack --config build/webpack.config.prod.js",
     "serve": "node dist",
-    "heroku-postbuild": "npm run prod"
+    "heroku-postbuild": "npm run prod",
+    "render-build-serve": "npm install --no-production && webpack --config build/webpack.config.prod.js && node dist"
   },
   "author": "Vladimir Kolchin <kolchin.moon@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.4.0",
     "dexie": "^2.0.4",
     "node-static": "^0.7.11",
     "vue": "^2.5.17",
