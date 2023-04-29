@@ -4,27 +4,8 @@ DnD handbook with helpfull information, like spells catalog, items, weapons info
 > Note that all data comes in **russian** !
 
 **DEMO**
-[heroku page](https://mighty-tundra-29690.herokuapp.com/)
+[render page](https://dnd-catalog.onrender.com/)
 
-## Project structure
-
-Whole project split into 2 parts - frontend and backend, with simple connection using websocket, mostly needed for receiving data from Sqlite Db
-
-> Don't forget to run ```npm install``` in both ```client``` and ```server``` directories to install all npm dependencies
-
-## Backend
-
-Main file ```src/index.js``` . Most important part of it is receiving data from Db tables, and list of tables made as array - probably need to refactor this part.
-
-``` js
-db.getTables(['spell', 'class', 'classSpells', 'armor', 'item', 'tool', 'weapon', 'sets'])
-    .then((response) => {
-      db.close();
-      io.emit('db response', {
-        db: response
-      });
-    });
-```
 
 ## Frontend
 Made with PWA standarts, using Vue js framework, build with webpack, data store is IndexedDb.
@@ -39,15 +20,6 @@ src                     //- main source files directory
     store/              //- vuex object file(s) directory
 ```
 
-> **Important note!** If you want to build this app localy look at ```src/config.json``` file and change backend socket link there, for example to ```localhost:3031```, if you run backend server localy on ```3031``` port.
-
-#### Testing
-For testing purposes run in console:
-``` bash
-$ npm run dev
-```
-This command will launch webpack dev server on ```localhost:8080```
-
 #### Production
 Run in console:
 ``` bash
@@ -55,11 +27,6 @@ $ npm run prod
 $ npm run serve
 ```
 With ```prod``` command webpack will build production files and put them into ```dist``` directory, and after it run ```serve``` command to start local static server using ```dist``` directory files
-
-> And also don't forget to run backend server - go to ```server``` directory and run in console:
-```bash
-$ npm run prod
-```
 
 ## Db Structure
 
